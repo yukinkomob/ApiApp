@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.fragment_api.*
 class FavoriteFragment : Fragment() {
 
     private val favoriteAdapter by lazy { FavoriteAdapter(requireContext()) }
-
     private var fragmentCallback: FragmentCallback? = null
 
     override fun onAttach(context: Context) {
@@ -35,6 +34,9 @@ class FavoriteFragment : Fragment() {
         favoriteAdapter.apply {
             onClickDeleteFavorite = {
                 fragmentCallback?.onDeleteFavorite(it.id)
+            }
+            onClickItem = {
+                fragmentCallback?.onClickItem(it)
             }
         }
         recyclerView.apply {

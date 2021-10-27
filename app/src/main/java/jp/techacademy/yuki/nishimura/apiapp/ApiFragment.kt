@@ -46,6 +46,9 @@ class ApiFragment : Fragment() {
             onClickDeleteFavorite = {
                 fragmentCallback?.onDeleteFavorite(it.id)
             }
+            onClickItem = {
+                fragmentCallback?.onClickItem(it)
+            }
         }
 
         recyclerView.apply {
