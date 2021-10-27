@@ -22,8 +22,18 @@ class ApiAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerVi
     var onClickItem: ((String) -> Unit)? = null
 
     fun refresh(list: List<Shop>) {
+        update(list, false)
+    }
+
+    fun add(list: List<Shop>) {
+        update(list, true)
+    }
+
+    fun update(list: List<Shop>, isAdd: Boolean) {
         items.apply {
-            clear()
+            if (!isAdd) {
+                clear()
+            }
             addAll(list)
         }
         notifyDataSetChanged()
@@ -46,11 +56,11 @@ class ApiAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerVi
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ApiItemViewHolder) {
-            updateAllItemViewHolder(holder, position)
+            updateApiItemViewHolder(holder, position)
         }
     }
 
-    private fun updateAllItemViewHolder(holder: ApiItemViewHolder, position: Int) {
+    private fun updateApiItemViewHolder(holder: ApiItemViewHolder, position: Int) {
         val data = items[position]
         val isFavorite = FavoriteShop.findBy(data.id) != null
         holder.apply {
