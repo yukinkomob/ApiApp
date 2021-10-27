@@ -1,9 +1,10 @@
 package jp.techacademy.yuki.nishimura.apiapp
 
 import io.realm.Realm
+import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class FavoriteShop {
+open class FavoriteShop: RealmObject() {
     @PrimaryKey
     var id: String = ""
     var imageUrl: String = ""
