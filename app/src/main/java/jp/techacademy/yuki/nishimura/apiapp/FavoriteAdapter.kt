@@ -43,7 +43,7 @@ class FavoriteAdapter(private val context: Context) :
                     .inflate(R.layout.recycler_favorite_empty, parent, false)
             )
             else -> FavoriteItemViewHolder(
-                LayoutInflater.from(context).inflate(R.layout.recycler_favorite, parent, false)
+                LayoutInflater.from(context).inflate(R.layout.recycler_favorite2, parent, false)
             )
         }
     }
