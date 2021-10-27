@@ -1,5 +1,6 @@
 package jp.techacademy.yuki.nishimura.apiapp
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -19,6 +20,15 @@ class ApiFragment : Fragment() {
     private val apiAdapter by lazy { ApiAdapter(requireContext()) }
     private val handler = Handler(Looper.getMainLooper())
 
+    private var fragmentCallback : FragmentCallback? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is FragmentCallback) {
+            fragmentCallback = context
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,6 +39,15 @@ class ApiFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        apiAdapter.apply {
+            onClickAddFavorite = {
+                fragmentCallback?.onAddFavorite(it)
+            }
+            onClickDeleteFavorite = {
+                fragmentCallback?.onDeleteFavorite(it.id)
+            }
+        }
+
         recyclerView.apply {
             adapter = apiAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -37,6 +56,10 @@ class ApiFragment : Fragment() {
             }
             updateData()
         }
+    }
+
+    fun updateView() {
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 
     private fun updateData() {
