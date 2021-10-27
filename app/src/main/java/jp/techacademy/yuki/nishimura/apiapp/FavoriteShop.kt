@@ -10,11 +10,13 @@ open class FavoriteShop: RealmObject() {
     var imageUrl: String = ""
     var name: String = ""
     var url: String = ""
+    var isDeleted: Boolean = false
 
     companion object {
         fun findAll(): List<FavoriteShop> =
             Realm.getDefaultInstance().use { realm ->
                 realm.where(FavoriteShop::class.java)
+                    .equalTo(FavoriteShop::isDeleted.name, false)
                     .findAll().let {
                         realm.copyFromRealm(it)
                     }
@@ -24,6 +26,7 @@ open class FavoriteShop: RealmObject() {
             Realm.getDefaultInstance().use { realm ->
                 realm.where(FavoriteShop::class.java)
                     .equalTo(FavoriteShop::id.name, id)
+                    .equalTo(FavoriteShop::isDeleted.name, false)
                     .findFirst()?.let {
                         realm.copyFromRealm(it)
                     }
@@ -34,16 +37,12 @@ open class FavoriteShop: RealmObject() {
                 it.insertOrUpdate(favoriteShop)
             }
 
-        fun delete(id: String) =
-            Realm.getDefaultInstance().use { realm ->
-                realm.where(FavoriteShop::class.java)
-                    .equalTo(FavoriteShop::id.name, id)
-                    .findFirst()?.also { deleteShop ->
-                        realm.executeTransaction {
-                            deleteShop.deleteFromRealm()
-                        }
-                    }
+        fun delete(id: String) {
+            val favoriteShop = findBy(id)
+            favoriteShop?.let {
+                it.isDeleted = true
+                insert(it)
             }
+        }
     }
-
 }
