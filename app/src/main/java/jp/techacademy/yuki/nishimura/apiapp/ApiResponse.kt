@@ -21,6 +21,8 @@ data class Shop(
     var logoImage: String,
     @SerializedName("name")
     var name: String,
+    @SerializedName("address")
+    var address: String
 )
 
 data class CouponUrls(

@@ -48,6 +48,7 @@ class ApiAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerVi
         val nameTextView: TextView = view.findViewById(R.id.nameTextView)
         val imageView: ImageView = view.findViewById(R.id.imageView)
         val favoriteImageView: ImageView = view.findViewById(R.id.favoriteImageView)
+        val addressTextView: TextView = view.findViewById(R.id.addressTextView)
     }
 
     override fun getItemCount(): Int {
@@ -85,6 +86,7 @@ class ApiAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerVi
                     notifyItemChanged(position)
                 }
             }
+            addressTextView.text = data.address
         }
     }
 }
