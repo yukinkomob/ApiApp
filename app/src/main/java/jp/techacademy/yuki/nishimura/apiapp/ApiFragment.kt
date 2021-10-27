@@ -7,6 +7,8 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +46,14 @@ class ApiFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val keywordEditText: EditText = view.findViewById(R.id.keywordEditText)
+        val searchButton: Button = view.findViewById(R.id.searchButton)
+        searchButton.setOnClickListener {
+            val keyword = keywordEditText.text.toString()
+            updateData(false, keyword)
+        }
+
         apiAdapter.apply {
             onClickAddFavorite = {
                 fragmentCallback?.onAddFavorite(it)
@@ -89,7 +99,7 @@ class ApiFragment : Fragment() {
         recyclerView.adapter?.notifyDataSetChanged()
     }
 
-    private fun updateData(isAdd: Boolean = false) {
+    private fun updateData(isAdd: Boolean = false, keyword: String? = null) {
         if (isLoading) {
             return
         } else {
@@ -106,7 +116,7 @@ class ApiFragment : Fragment() {
             .append("?key=").append(getString(R.string.api_key))
             .append("&start=").append(start)
             .append("&count=").append(COUNT)
-            .append("&keyword=").append(getString(R.string.api_keyword))
+            .append("&keyword=").append(keyword ?: "ランチ")
             .append("&format=json")
             .toString()
         val client = OkHttpClient.Builder()
