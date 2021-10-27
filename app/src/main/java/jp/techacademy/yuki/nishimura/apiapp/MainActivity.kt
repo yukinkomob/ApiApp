@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity(), FragmentCallback {
         }.attach()
     }
 
-    override fun onClickItem(url: String) {
-        WebViewActivity.start(this, url)
+    override fun onClickItem(url: String, shop: FavoriteShopData?) {
+        WebViewActivity.start(this, url, shop)
     }
 
     override fun onAddFavorite(shop: Shop) {

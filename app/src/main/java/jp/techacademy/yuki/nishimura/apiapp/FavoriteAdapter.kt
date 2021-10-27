@@ -18,7 +18,7 @@ class FavoriteAdapter(private val context: Context) :
 
     var onClickDeleteFavorite: ((FavoriteShop) -> Unit)? = null
 
-    var onClickItem: ((String) -> Unit)? = null
+    var onClickItem: ((String, FavoriteShopData) -> Unit)? = null
 
     fun refresh(list: List<FavoriteShop>) {
         items.apply {
@@ -65,7 +65,7 @@ class FavoriteAdapter(private val context: Context) :
                     )
                 )
                 setOnClickListener {
-                    onClickItem?.invoke(data.url)
+                    onClickItem?.invoke(data.url, FavoriteShopData(data.url, data.id, data.imageUrl, data.name))
                 }
             }
             nameTextView.text = data.name

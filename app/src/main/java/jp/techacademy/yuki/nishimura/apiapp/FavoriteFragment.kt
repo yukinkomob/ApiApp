@@ -35,8 +35,8 @@ class FavoriteFragment : Fragment() {
             onClickDeleteFavorite = {
                 fragmentCallback?.onDeleteFavorite(it.id)
             }
-            onClickItem = {
-                fragmentCallback?.onClickItem(it)
+            onClickItem = { url, shop ->
+                fragmentCallback?.onClickItem(url, shop)
             }
         }
         recyclerView.apply {
@@ -46,6 +46,11 @@ class FavoriteFragment : Fragment() {
         swipeRefreshLayout.setOnRefreshListener {
             updateData()
         }
+        updateData()
+    }
+
+    override fun onResume() {
+        super.onResume()
         updateData()
     }
 

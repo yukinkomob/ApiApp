@@ -51,8 +51,8 @@ class ApiFragment : Fragment() {
             onClickDeleteFavorite = {
                 fragmentCallback?.onDeleteFavorite(it.id)
             }
-            onClickItem = {
-                fragmentCallback?.onClickItem(it)
+            onClickItem = { url, shop ->
+                fragmentCallback?.onClickItem(url, shop)
             }
         }
 
@@ -78,6 +78,11 @@ class ApiFragment : Fragment() {
             }
             updateData()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateView()
     }
 
     fun updateView() {

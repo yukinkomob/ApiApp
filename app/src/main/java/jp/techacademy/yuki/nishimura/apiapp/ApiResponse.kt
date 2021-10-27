@@ -1,6 +1,7 @@
 package jp.techacademy.yuki.nishimura.apiapp
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ApiResponse(
     @SerializedName("results")
